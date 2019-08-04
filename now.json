@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "env": {
+    "IS_NOW_BUILD": "yes"
+  }
+}

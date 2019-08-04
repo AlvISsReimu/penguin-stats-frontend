@@ -2,8 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home'
 import Report from './views/Report'
-import StatsByChapter from './views/StatsByChapter'
-import StatsByItem from './views/StatsByItem'
+import StatsByStage from './views/Stats/Stage'
+import StatsByItem from './views/Stats/Item'
+import StatsLayout from './layouts/StatsLayout'
 import ChangeLog from './views/ChangeLog'
 
 Vue.use(Router)
@@ -34,32 +35,76 @@ export default new Router({
       }
     },
     {
-      path: '/stats/chapter',
-      name: 'StatsByChapter',
-      component: StatsByChapter,
+      path: '/result',
+      name: 'Stats',
+      component: StatsLayout,
       meta: {
         icon: 'mdi-chart-pie',
-        i18n: 'menu.stats.stage'
-      }
-    },
-    {
-      path: '/stats/item',
-      name: 'StatsByItem',
-      component: StatsByItem,
-      meta: {
-        icon: 'mdi-chart-pie',
-        i18n: 'menu.stats.item'
-      }
+        i18n: 'menu.stats._name'
+      },
+      children: [
+        {
+          path: 'stage',
+          name: 'StatsByStage',
+          component: StatsByStage,
+          props: true,
+          meta: {
+            icon: 'mdi-cube',
+            i18n: 'menu.stats.stage'
+          },
+        },
+        {
+          path: 'stage/:zoneId',
+          name: 'StatsByStage_SelectedZone',
+          component: StatsByStage,
+          props: true,
+          meta: {
+            hide: true,
+            i18n: 'menu.stats.stage'
+          },
+        },
+        {
+          path: 'stage/:zoneId/:stageId',
+          name: 'StatsByStage_SelectedBoth',
+          component: StatsByStage,
+          props: true,
+          meta: {
+            hide: true,
+            i18n: 'menu.stats.stage'
+          },
+        },
+        {
+          path: 'item',
+          name: 'StatsByItem',
+          component: StatsByItem,
+          props: true,
+          meta: {
+            icon: 'mdi-treasure-chest',
+            i18n: 'menu.stats.item'
+          },
+        },
+        {
+          path: 'item/:itemId',
+          name: 'StatsByItem_SelectedItem',
+          component: StatsByItem,
+          props: true,
+          meta: {
+            hide: true,
+            i18n: 'menu.stats.item'
+          },
+        }
+      ]
     },
     {
       path: '/planner',
       name: 'Planner',
       beforeEnter () {
-        window.location = "https://planner.penguin-stats.io"
+        window.location.replace("https://planner.penguin-stats.io")
       },
       meta: {
         icon: 'mdi-floor-plan',
-        i18n: 'menu.planner'
+        i18n: 'menu.planner',
+        externalRedirect: true
       }
     },
     {
